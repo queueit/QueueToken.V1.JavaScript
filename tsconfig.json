@@ -1,0 +1,19 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es5",
+    "removeComments": false,
+    "sourceMap": false,
+    "noImplicitAny": false,
+    "declaration": true,
+    "noEmitOnError": true,
+    "outDir": "./dist",
+    "module": "CommonJS",
+    "esModuleInterop": true
+  },
+  "exclude": [
+    "tests",
+    "node_modules",
+    "dist"
+  ]
+}

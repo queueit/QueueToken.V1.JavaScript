@@ -1,0 +1,37 @@
+{
+  "env": {
+    "browser": false,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:compat/recommended",
+    "plugin:sonarjs/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2016
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "sonarjs"
+  ],
+  "rules": {
+    "no-multiple-empty-lines": "error",
+    "no-console": "error",
+    "no-empty": "error",
+    "no-irregular-whitespace": "error",
+    "no-unused-vars": "off",
+    "no-alert": "error",
+    "no-unreachable": "error",
+    "sonarjs/cognitive-complexity": "warn",
+    "sonarjs/no-small-switch": "warn",
+    "sonarjs/no-identical-functions": "warn",
+    "sonarjs/prefer-while": "off"
+  },
+  "settings": {
+    "polyfills": [
+      "Promise",
+      "fetch"
+    ]
+  }
+}

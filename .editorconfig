@@ -1,0 +1,15 @@
+root = true
+
+[*]
+charset = utf-8
+
+[*.js]
+insert_final_newline=false
+
+[*.md]
+insert_final_newline=false
+
+[package.json]
+indent_style = space
+indent_size = 2
+insert_final_newline=false
