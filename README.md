@@ -1,4 +1,4 @@
-[![NPM](https://nodeico.herokuapp.com/@queue-it/queue-token.svg)](https://www.npmjs.com/package/@queue-it/queue-token)
+
 
 # Queue-it Queue Token SDK for JavaScript 
 The Queue-it Queue Token SDK is used to ensure that end users cannot enter the queue without a valid token and to be a container which can car-ry sensitive user information from integrating system into the queue. The token can be issued by any application that supports JAVA 1.6+.

@@ -1,5 +1,5 @@
 {
-  "name": "@queue-it/queue-token",
+  "name": "@queue-it/enqueue-token",
   "version": "1.0.0",
   "description": "Ensures that end users cannot enter the queue without a valid token and to be a container which can carry sensitive user information from integrating system into the queue",
   "repository": "https://github.com/queueit/QueueToken.V1.JavaScript",
@@ -10,7 +10,7 @@
     "build": "tsc && npm run browserify",
     "browserify": "browserify . -s QueueToken -o dist/browserified.js",
     "test": "mocha -r ts-node/register 'tests/**/*.ts'",
-    "prepare": "husky install .husky; npm run build"
+    "prepare": "husky install .husky & npm run build"
   },
   "keywords": [],
   "author": "",
