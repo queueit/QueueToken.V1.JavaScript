@@ -1,6 +1,6 @@
 {
   "name": "@queue-it/queue-token",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Ensures that end users cannot enter the queue without a valid token and to be a container which can carry sensitive user information from integrating system into the queue",
   "repository": "https://github.com/queueit/QueueToken.V1.JavaScript",
   "main": "dist/index.js",
@@ -17,24 +17,24 @@
   "license": "MIT",
   "devDependencies": {
     "@types/mocha": "^9.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.8.2",
-    "@typescript-eslint/parser": "^4.8.2",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
     "browserify": "^17.0.0",
     "chai": "^4.3.4",
     "chai-string": "^1.5.0",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-compat": "^3.8.0",
+    "eslint-plugin-compat": "^3.13.0",
     "eslint-plugin-ie11": "^1.0.0",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-sonarjs": "^0.9.1",
-    "husky": "^7.0.0",
+    "husky": "^7.0.4",
     "lint-staged": "^10.5.4",
-    "mocha": "^9.0.1",
-    "ts-node": "^10.1.0",
-    "typescript": "^4.3.5"
+    "mocha": "^9.1.4",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
   },
   "lint-staged": {
     "src/**/*.ts": [
