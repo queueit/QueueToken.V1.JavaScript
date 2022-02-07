@@ -25,6 +25,7 @@ export class Utils {
     // Based on REF 4122 section 4.4 http://www.ietf.org/rfc/rfc4122.txt
     static generateUUID(): string {
         const s = [];
+        // eslint-disable-next-line no-secrets/no-secrets
         const hexDigits = "0123456789abcdef";
         for (let i = 0; i < 36; i++) {
             s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
@@ -44,7 +45,11 @@ export class Utils {
     static generateIV(value: string): Uint8Array {
         const utf8Bytes = Utf8Converter.toBytes(value);
         let bytes: Uint8Array = md5(utf8Bytes);
-        return bytes.slice(0, 16);
+        if(bytes.slice){
+            return bytes.slice(0, 16);
+        }else{
+            return new Uint8Array(bytes.buffer.slice(0, 16));
+        }
     }
 
     static uint8ArrayToHexString(byteArray: Uint8Array): string {

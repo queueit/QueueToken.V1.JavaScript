@@ -3,6 +3,7 @@
 //  The function itself is now 42 lines long.
 
 export function md5(input: Uint8Array): Uint8Array {
+    // eslint-disable-next-line no-secrets/no-secrets
     const hc = "0123456789abcdef";
 
     function rh(n): Uint8Array {
