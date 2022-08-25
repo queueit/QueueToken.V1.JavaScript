@@ -25,7 +25,7 @@ Both header and payload are in JSON format.
 }
 ```
 
-- `typ`: The type of the token. Value must be "QFT1". Required.
+- `typ`: The type of the token. Value must be "QT1". Required.
 - `enc`: Payload encryption algorithm. Value must be "AES256". Required.
 - `iss`: NumericDate of when token was issued. Required.
 - `exp`: NumericDate of when token expires. Optional.
@@ -62,7 +62,7 @@ const token = Token
         .WithCustomData("size", "medium")
         .Generate())
     .WithEventId("demoevent")
-    .WithIpAddress("75.86.129.4", "45.67.2.4,34.56.3.2")
+    .WithIpAddress("75.86.129.4", "45.67.2.4", "34.56.3.2")
     .WithValidity(60000)
     .Generate(secretKey);
 
