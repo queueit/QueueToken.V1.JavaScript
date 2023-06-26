@@ -1,9 +1,9 @@
-import {TokenVersion} from "./model/TokenVersion";
-import {EnqueueTokenPayload, IEnqueueTokenPayload} from "./Payload";
-import {EncryptionType} from "./model/EncryptionType";
-import {ShaHashing, Utils} from "./QueueITHelpers";
-import {HeaderDto} from "./model/HeaderDto";
-import {Base64} from "./helpers/Base64";
+import { TokenVersion } from "./model/TokenVersion";
+import { EnqueueTokenPayload, IEnqueueTokenPayload } from "./Payload";
+import { EncryptionType } from "./model/EncryptionType";
+import { ShaHashing, Utils } from "./QueueITHelpers";
+import { HeaderDto } from "./model/HeaderDto";
+import { Base64 } from "./helpers/Base64";
 
 const InvalidTokenExceptionMessage = "Invalid token";
 
@@ -116,13 +116,13 @@ export class EnqueueToken {
     }
 
     public static Create(tokenIdentifier: string,
-                         customerId: string,
-                         eventId: string,
-                         issued: Date,
-                         expires: Date,
-                         ipAddress: string,
-                         xForwardedFor: string,
-                         payload: IEnqueueTokenPayload) {
+        customerId: string,
+        eventId: string,
+        issued: Date,
+        expires: Date,
+        ipAddress: string,
+        xForwardedFor: string,
+        payload: IEnqueueTokenPayload) {
         const token = new EnqueueToken(customerId, "");
         token.TokenIdentifier = tokenIdentifier;
         token.CustomerId = customerId;
