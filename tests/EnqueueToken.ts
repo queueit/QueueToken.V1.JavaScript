@@ -1,12 +1,13 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 
-import {expect} from "chai";
-import {Payload} from "../src";
-import {Utils} from "../src/QueueITHelpers";
-import {EnqueueToken, Token} from "../src/Token";
-import {TokenVersion} from "../src/model/TokenVersion";
-import {EncryptionType} from "../src/model/EncryptionType";
-import {HeaderDto} from "../src/model/HeaderDto";
+import { expect } from "chai";
+import { Payload } from "../src";
+import { Utils } from "../src/QueueITHelpers";
+import { EnqueueToken, Token } from "../src/Token";
+import { TokenVersion } from "../src/model/TokenVersion";
+import { EncryptionType } from "../src/model/EncryptionType";
+import { HeaderDto } from "../src/model/HeaderDto";
+import { TokenOrigin } from "../src/model/TokenOrigin";
 
 describe('Enqueue Token', () => {
     it('should create a simple token', () => {
@@ -122,7 +123,7 @@ describe('Enqueue Token', () => {
 
     it('should sign a token with payload and custom data', () => {
         const expectedSignedToken =
-            "eyJ0eXAiOiJRVDEiLCJlbmMiOiJBRVMyNTYiLCJpc3MiOjE1MzQ3MjMyMDAwMDAsImV4cCI6MTUzOTEyOTYwMDAwMCwidGkiOiJhMjFkNDIzYS00M2ZkLTQ4MjEtODRmYS00MzkwZjZhMmZkM2UiLCJjIjoidGlja2V0YW5pYSIsImUiOiJteWV2ZW50In0.0rDlI69F1Dx4Twps5qD4cQrbXbCRiezBd6fH1PVm6CnVY456FALkAhN3rgVrh_PGCJHcEXN5zoqFg65MH8WZc_CQdD63hJre3Sedu0-9zIs.aZgzkJm57etFaXjjME_-9LjOgPNTTqkp1aJ057HuEiU";
+            "eyJ0eXAiOiJRVDEiLCJlbmMiOiJBRVMyNTYiLCJpc3MiOjE1MzQ3MjMyMDAwMDAsImV4cCI6MTUzOTEyOTYwMDAwMCwidGkiOiJhMjFkNDIzYS00M2ZkLTQ4MjEtODRmYS00MzkwZjZhMmZkM2UiLCJjIjoidGlja2V0YW5pYSIsImUiOiJteWV2ZW50In0.0rDlI69F1Dx4Twps5qD4cQrbXbCRiezBd6fH1PVm6CnVY456FALkAhN3rgVrh_PGCJHcEXN5zoqFg65MH8WZcxl-G7_FAsZgEyBPRqsoJoylWJjVe-e1HI-voBaV7x6Q.bRyvSKj3Dn0w_HPer62N0mVQP4dNPl5OIcXw7DrTH5g";
 
         const payload = Payload
             .Enqueue()
@@ -281,5 +282,36 @@ describe('Enqueue Token', () => {
         expect(enqueueToken.Encryption).to.be.equal(EncryptionType.AES256);
         expect(enqueueToken.TokenVersion).to.be.equal(TokenVersion.QT1);
         expect(enqueueToken.Payload).to.be.undefined;
+    });
+
+    it('should create token with AkamaiBotManagerHeaderValidator origin and parse it back correctly', () => {
+        const expectedCustomerId = "testId";
+        const expectedKey = "testkey";
+        const expectedOrigin = TokenOrigin.AkamaiBotManagerHeaderValidator;
+        const secretKey = "testKey";
+
+        const payload = Payload
+            .Enqueue()
+            .WithKey(expectedKey)
+            .WithOrigin(expectedOrigin)
+            .Generate();
+
+        const token = Token
+            .Enqueue(expectedCustomerId)
+            .WithPayload(payload)
+            .Generate(secretKey);
+
+        // Verify the payload before parsing
+        expect(token.Payload.TokenOrigin).to.be.equal(expectedOrigin);
+        expect(token.Payload.Key).to.be.equal(expectedKey);
+
+        // Parse the token back
+        const parsedToken = Token.Parse(token.Token, secretKey);
+
+        // Verify all properties are preserved
+        expect(parsedToken.CustomerId).to.be.equal(expectedCustomerId);
+        expect(parsedToken.Payload).to.not.be.undefined;
+        expect(parsedToken.Payload.Key).to.be.equal(expectedKey);
+        expect(parsedToken.Payload.TokenOrigin).to.be.equal(expectedOrigin);
     });
 });

@@ -1,6 +1,7 @@
-import {expect} from "chai";
-import {IEnqueueTokenPayload, Payload} from "../src/Payload";
-import {Utils} from "../src/QueueITHelpers";
+import { expect } from "chai";
+import { IEnqueueTokenPayload, Payload } from "../src/Payload";
+import { Utils } from "../src/QueueITHelpers";
+import { TokenOrigin } from "../src/model/TokenOrigin";
 
 describe('Enqueue token payload', function () {
     it('should be able to generate a simple payload', () => {
@@ -111,8 +112,30 @@ describe('Enqueue token payload', function () {
         expect(actualCustomData).to.be.equal(expectedCustomDataValue);
     });
 
+    it('Should be able to generate a payload only with Token Origin', () => {
+        const instance = Payload.Enqueue()
+            .WithOrigin(TokenOrigin.Connector)
+            .Generate();
+            
+        const actualOrigin = instance.TokenOrigin;
+        expect(actualOrigin).to.be.equal(TokenOrigin.Connector);
+    });
+
+    it('should serialize payload with InviteOnly origin', () => {
+        const expectedJson = "{\"k\":\"myKey\",\"o\":\"InviteOnly\"}";
+
+        const instance = Payload
+            .Enqueue()
+            .WithKey("myKey")
+            .WithOrigin(TokenOrigin.InviteOnly)
+            .Generate();
+        const actualJson = Utils.uint8ArrayToString(instance.Serialize());
+
+        expect(actualJson).to.be.equal(expectedJson);
+    });
+
     it('should serialize key with relative quality and multiple custom data', () => {
-        const expectedJson = "{\"r\":0.456,\"k\":\"myKey\",\"cd\":{\"key1\":\"Value1\",\"key2\":\"Value2\",\"key3\":\"Value3\"}}";
+        const expectedJson = "{\"r\":0.456,\"k\":\"myKey\",\"cd\":{\"key1\":\"Value1\",\"key2\":\"Value2\",\"key3\":\"Value3\"},\"o\":\"Connector\"}";
 
         const instance = Payload
             .Enqueue()
@@ -128,7 +151,7 @@ describe('Enqueue token payload', function () {
     });
 
     it('should serialize key relative quality and one custom data', () => {
-        const expectedJson = "{\"r\":0.456,\"k\":\"myKey\",\"cd\":{\"key1\":\"Value1\"}}";
+        const expectedJson = "{\"r\":0.456,\"k\":\"myKey\",\"cd\":{\"key1\":\"Value1\"},\"o\":\"Connector\"}";
 
         const instance = Payload
             .Enqueue()
@@ -142,7 +165,7 @@ describe('Enqueue token payload', function () {
     });
 
     it('should serialize key and relative quality', () => {
-        const expectedJson = "{\"r\":0.456,\"k\":\"myKey\"}";
+        const expectedJson = "{\"r\":0.456,\"k\":\"myKey\",\"o\":\"Connector\"}";
 
         const instance = Payload
             .Enqueue()
@@ -155,7 +178,7 @@ describe('Enqueue token payload', function () {
     });
 
     it('should serialize key only', () => {
-        const expectedJson = "{\"k\":\"myKey\"}";
+        const expectedJson = "{\"k\":\"myKey\",\"o\":\"Connector\"}";
 
         const instance = Payload
             .Enqueue()
@@ -167,7 +190,7 @@ describe('Enqueue token payload', function () {
     });
 
     it('should serialize key only escaped', () => {
-        const expectedJson = "{\"k\":\"my\\\"Key\"}";
+        const expectedJson = "{\"k\":\"my\\\"Key\",\"o\":\"Connector\"}";
 
         const instance = Payload
             .Enqueue()
@@ -179,7 +202,7 @@ describe('Enqueue token payload', function () {
     });
 
     it('should serialize relative quality only', () => {
-        const expectedJson = "{\"r\":0.456}";
+        const expectedJson = "{\"r\":0.456,\"o\":\"Connector\"}";
 
         const instance = Payload
             .Enqueue()
@@ -191,7 +214,7 @@ describe('Enqueue token payload', function () {
     });
 
     it('should serialize custom data only', () => {
-        const expectedJson = "{\"cd\":{\"key1\":\"Value1\"}}";
+        const expectedJson = "{\"cd\":{\"key1\":\"Value1\"},\"o\":\"Connector\"}";
 
         const instance = Payload
             .Enqueue()
@@ -203,7 +226,7 @@ describe('Enqueue token payload', function () {
     });
 
     it('should serialize custom data escaped', () => {
-        const expectedJson = "{\"cd\":{\"ke\\\"y1\":\"Va\\\"lue1\"}}";
+        const expectedJson = "{\"cd\":{\"ke\\\"y1\":\"Va\\\"lue1\"},\"o\":\"Connector\"}";
 
         const instance = Payload
             .Enqueue()
@@ -215,7 +238,7 @@ describe('Enqueue token payload', function () {
     });
 
     it('should be encrypted correctly', () => {
-        const expectedEncryptedPayload = "0rDlI69F1Dx4Twps5qD4cQrbXbCRiezBd6fH1PVm6CnVY456FALkAhN3rgVrh_PGCJHcEXN5zoqFg65MH8WZc_CQdD63hJre3Sedu0-9zIs";
+        const expectedEncryptedPayload = "0rDlI69F1Dx4Twps5qD4cQrbXbCRiezBd6fH1PVm6CnVY456FALkAhN3rgVrh_PGCJHcEXN5zoqFg65MH8WZcxl-G7_FAsZgEyBPRqsoJoylWJjVe-e1HI-voBaV7x6Q";
         const payload = Payload
             .Enqueue()
             .WithKey("somekey")
