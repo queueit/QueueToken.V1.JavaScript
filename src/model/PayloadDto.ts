@@ -41,7 +41,9 @@ export class PayloadDto {
             payload.CustomData = jsonData['cd'];
         }
 
-        jsonData['o'] = payload.Origin ?? jsonData['o'];
+        if (jsonData['o']) {
+            payload.Origin = jsonData['o'];
+        }
 
         return payload;
     }

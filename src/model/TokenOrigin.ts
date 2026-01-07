@@ -1,4 +1,5 @@
 export enum TokenOrigin {
-    Connector,
-    InviteOnly
+    Connector = "Connector",
+    InviteOnly = "InviteOnly",
+    AkamaiBotManagerHeaderValidator = "AkamaiBotManagerHeaderValidator"
 } 

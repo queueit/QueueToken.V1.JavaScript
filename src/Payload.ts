@@ -97,6 +97,7 @@ export class EnqueueTokenPayload implements IEnqueueTokenPayload {
         if (payload) {
             newPayload.RelativeQuality = payload.RelativeQuality;
             newPayload._customData = payload._customData;
+            newPayload._origin = payload._origin;
             if (!key || key.length == 0) {
                 newPayload.Key = payload.Key;
             }
